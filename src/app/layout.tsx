@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+
+
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"]});
+
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import { CreateWorkspaceModal } from '../features/workspaces/components/create-workspaces-modal';
+
+
+import { Modals } from "@/components/modals";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +38,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ConvexClientProvider>
-            <CreateWorkspaceModal/>
+            <Toaster/>
+            <Modals/>
             {children}
           </ConvexClientProvider>
         </body>
