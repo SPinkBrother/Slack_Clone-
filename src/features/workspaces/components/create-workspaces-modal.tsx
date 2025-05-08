@@ -13,13 +13,13 @@ import {
   import { Input } from "@/components/ui/input";
   import { Button } from "@/components/ui/button";
   import { useCreateWorkspace } from '../api/use-create-workspaces';
-  import { useCreateWorkSpacesModal } from "../store/use-create-workspace-modal"
+  import { useCreateWorkSpaceModal } from "../store/use-create-workspace-modal"
 import { toast } from "sonner";
  
 export const CreateWorkspaceModal = () => {
 
     const router = useRouter();
-    const [open,setOpen] = useCreateWorkSpacesModal();
+    const [open,setOpen] = useCreateWorkSpaceModal();
     const [name,setName] = useState("");
 
     const {mutate, isPending} = useCreateWorkspace();

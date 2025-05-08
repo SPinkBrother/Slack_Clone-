@@ -1,14 +1,7 @@
-interface WorkSpaceIdPageProps{
-    params: {
-        workspaceId: string;
-    };
-}
-
-
-const WorkspaceIdPage = ({params} : WorkSpaceIdPageProps) => {
+const WorkspaceIdPage = () => {
     return(
         <div>
-            ID: {params.workspaceId}
+            Workspace id page
         </div>
     );
 }
