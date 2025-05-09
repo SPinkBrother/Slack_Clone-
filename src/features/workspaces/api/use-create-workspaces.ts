@@ -40,6 +40,7 @@ export const useCreateWorkspace  = () =>{
             options?.onSuccess?.(response);
             return response;
         } catch(error) {
+            setStatus("error")
             // Make sure it give right error value
             options?.onError?.(error as Error);
 

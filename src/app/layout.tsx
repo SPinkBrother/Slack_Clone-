@@ -12,6 +12,7 @@ import { CreateWorkspaceModal } from '../features/workspaces/components/create-w
 
 import { Modals } from "@/components/modals";
 import { Toaster } from "@/components/ui/sonner";
+import { JotaiProvider } from "@/components/jotai-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,9 +39,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ConvexClientProvider>
-            <Toaster/>
-            <Modals/>
-            {children}
+            <JotaiProvider>
+              <Toaster/>
+              <Modals/>
+              {children}
+            </JotaiProvider>
           </ConvexClientProvider>
         </body>
       </html>
