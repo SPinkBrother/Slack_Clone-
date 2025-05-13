@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspaces-modal";
+import { CreateChannelModal } from "@/features/channels/components/create-channel-modal";
 
 export const Modals = () => {
     // only show modals when on client
@@ -17,6 +18,7 @@ export const Modals = () => {
     if(!mounted ) return null;
     return (
         <>
+            <CreateChannelModal/>
             <CreateWorkspaceModal/>
         </>
     );

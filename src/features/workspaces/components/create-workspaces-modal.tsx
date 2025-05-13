@@ -12,7 +12,7 @@ import {
   
   import { Input } from "@/components/ui/input";
   import { Button } from "@/components/ui/button";
-  import { useCreateWorkspace } from '../api/use-create-workspaces';
+  import { useCreateWorkspace } from '../api/use-create-workspace';
   import { useCreateWorkSpaceModal } from "../store/use-create-workspace-modal"
 import { toast } from "sonner";
  

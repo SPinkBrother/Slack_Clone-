@@ -10,9 +10,13 @@ import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useGetMembers } from "@/features/members/api/use-get-member";
 import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { UserItem } from "./user-item";
+import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 
 export const WorkspaceSidebar = () => {
     const workspaceId = useWorkSpaceId();
+
+    const [_open, setOpen] = useCreateChannelModal();
+    
 
     const {data: workspace, isLoading: workspaceLoading} = useGetWorkspace({id: workspaceId});
     const {data: channels, isLoading: channelsLoading} = useGetChannels({workspaceId});
@@ -64,7 +68,7 @@ export const WorkspaceSidebar = () => {
             <WorkspaceSection
                 label="Channels"
                 hint="New channel"
-                onNew={() => {}}
+                onNew={member.role === "admin" ? () => setOpen(true): undefined}
             >
                 {channels?.map((item) =>(
                     <SidebarItem
@@ -83,15 +87,13 @@ export const WorkspaceSidebar = () => {
                 hint="New direct message"
                 onNew={() => {}}
             >
-                {members?.map((item) =>(
-                    <div>
-                        <UserItem
-                            key={item._id}
-                            id={item._id}
-                            label={item.user.name}
-                            image={item.user.image}
-                        />
-                    </div>
+                {members?.map((item) =>( 
+                    <UserItem
+                        key={item._id}
+                        id={item._id}
+                        label={item.user.name}
+                        image={item.user.image}
+                    />
                 ))}
             </WorkspaceSection>
 
