@@ -35,7 +35,7 @@ export const CreateChannelModal = () =>{
     const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
         setName(value);
-    }
+    };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
