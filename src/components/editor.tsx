@@ -10,6 +10,7 @@ import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Icon, ImageIcon, Smile } from "lucide-react";
 import { Hint } from "./hint";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type EditorValue = {
     image: File | null;
@@ -36,6 +37,7 @@ const Editor = ({
     variant = "create"
 }:EditorProps) => {
     const [text, setText] = useState("")
+    const [image, setImage] = useState<File | null >(null);
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -72,8 +74,17 @@ const Editor = ({
                     bindings:{
                         enter: {
                             key: "Enter",
-                            handler: () => {
-                                return;
+                            handler:() => {
+                                const text = quill.getText();
+                                // Todo: add img method
+                                const addedImage = null;
+                                // const addedImage = imageElementRef.current?.files?.[0] || null;
+                                // !addedImage 
+                                const isEmpty = text.replace(/<(.|\n)*?>/g,"").trim().length === 0;
+                                
+                                if(isEmpty) return;
+                                const body = JSON.stringify(quill.getContents());
+                                submitRef.current?.({ body, image: addedImage})
                             }
                         },
                         shift_enter: {
@@ -118,11 +129,13 @@ const Editor = ({
 
     }, [innerRef]);
 
-    const isEmpty =text.replace(/<(.|\n)*?>/g,"").trim().length === 0;
+    const isEmpty = !image && text.replace(/<(.|\n)*?>/g,"").trim().length === 0;
     
     return(
         <div className=" flex flex-col">
-            <div className=" flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white">
+            <div className={cn(" flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white",
+            disabled && "opacity-50"
+            )}>
                 <div ref={containerRef} className=" h-full ql-custom" />
                 <div className=" flex px-2 pb-2 z-[5]">
                     <Hint label="Hide formatting">
@@ -162,14 +175,19 @@ const Editor = ({
                             <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => {}}
+                                onClick={onCancel}
                                 disabled= {false}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 size="sm"
-                                onClick={() => {}}
+                                onClick={() => {
+                                    onSubmit({
+                                        body: JSON.stringify(quillRef.current?.getContents()),
+                                        image,
+                                    })
+                                }}
                                 disabled= {false}
                                 className=" ml-auto bg-[#5e2c5f] hover:bg-[#5e2c5f]/80 text-white"
                             >
@@ -181,7 +199,12 @@ const Editor = ({
                         <Hint label="Send">
                             <Button
                                 disabled={disabled || isEmpty}
-                                onClick={() => {}}
+                                onClick={() => {
+                                    onSubmit({
+                                        body: JSON.stringify(quillRef.current?.getContents()),
+                                        image,
+                                    })
+                                }}
                                 className={cn(
                                     " ml-auto", 
                                     isEmpty
@@ -196,11 +219,16 @@ const Editor = ({
                     )}
                 </div>
             </div>
-            <div className=" p-2 text-[10px] text-muted-foreground flex justify-end">
-                <p>
-                    <strong>Shift + Enter </strong> to add a new line
-                </p>
-            </div>
+            {variant === "create" &&(
+                <div className={cn(
+                    "p-2 text-[10px] text-muted-foreground flex justify-end opacity-0 transition",
+                    !isEmpty && "opacity-100"
+                )}>
+                    <p>
+                        <strong>Shift + Enter </strong> to add a new line
+                    </p>
+                </div>
+            )}
         </div>
     );
 };
