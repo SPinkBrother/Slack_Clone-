@@ -10,7 +10,8 @@ type RequestType = {
     workspaceId: Id<"workspaces">, 
     // image: Id<"_storage">, 
     channelId?: Id <"channels">, 
-    parentMessageId?: Id<"messages">, 
+    parentMessageId?: Id<"messages">,
+    conversationId?: Id<"conversations">,
 } ;
 type ResponseType = Id<"messages">| null;
 
