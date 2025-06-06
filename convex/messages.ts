@@ -210,7 +210,7 @@ export const create = mutation({
         const messageId = await ctx.db.insert("messages",{
             memberId: member._id,
             body: args.body,
-            // image: args.image,
+            image: args.image,
             channelId: args.channelId,
             conversationId: _conversationId,
             workspaceId: args.workspaceId,
