@@ -5,7 +5,10 @@ import { Hint } from "./hint";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Thumbnail } from "./thumbnail";
 
+
 const Renderer = dynamic(() => import("@/components/renderer"), {ssr:false});
+
+import { Toolbar } from "./toolbar";
 
 interface MessageProps {
   id: Id<"messages">;
@@ -42,7 +45,7 @@ export const Message = ({
   memberId,
   authorImage,
   authorName = "Member",
-  // reaction={message.reactions},
+  // reaction,
   body,
   image,
   updatedAt,
@@ -111,6 +114,18 @@ export const Message = ({
           ): null}
         </div>
       </div>
+      {!isEditing && (
+        <Toolbar
+          isAuthor ={isAuthor}
+          isPending = {false}
+          handleEdit = {() => setEditingId(id)}
+          handleThread = {() => {}}
+          handleDelete = {() => {}}
+          handleReaction= {() => {}}
+          hideThreadButton = {hideThreadButton}
+          
+        />
+      )}
     </div>
   )
 }
